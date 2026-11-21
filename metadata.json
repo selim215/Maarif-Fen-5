@@ -1,0 +1,8 @@
+{
+  "name": "Maarif Fen 5",
+  "description": "5. sınıf Fen Bilimleri dersi için interaktif simülasyonlar, flip-flop bilgi kartları, boşluk doldurma ve oyunlaştırılmış görev hattı içeren mobil öncelikli eğitim platformu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    background-color: #0b1120;
+    color: #f1f5f9;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.space-starfield {
+  background-image:
+    radial-gradient(1.5px 1.5px at 14% 22%, rgba(255, 255, 255, 0.55) 50%, transparent 100%),
+    radial-gradient(1px 1px at 32% 68%, rgba(186, 230, 253, 0.45) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 67% 18%, rgba(254, 243, 199, 0.55) 50%, transparent 100%),
+    radial-gradient(1px 1px at 84% 44%, rgba(255, 255, 255, 0.4) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 51% 84%, rgba(186, 230, 253, 0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 91% 78%, rgba(255, 255, 255, 0.35) 50%, transparent 100%),
+    radial-gradient(1px 1px at 22% 88%, rgba(254, 243, 199, 0.4) 50%, transparent 100%);
+  background-size: 320px 320px;
+}
+
+.force-lab-grid {
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(16, 185, 129, 0.14), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(249, 115, 22, 0.1), transparent 40%),
+    radial-gradient(rgba(52, 211, 153, 0.16) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px;
+}
+
+.life-bio-glow {
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(139, 92, 246, 0.18), transparent 45%),
+    radial-gradient(circle at 82% 75%, rgba(34, 211, 238, 0.13), transparent 42%),
+    radial-gradient(1.5px 1.5px at 25% 40%, rgba(196, 181, 253, 0.25) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 75% 60%, rgba(103, 232, 249, 0.25) 50%, transparent 100%);
+  background-size: 100% 100%, 100% 100%, 220px 220px, 260px 260px;
+}
+
+.light-optics-bg {
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(244, 63, 94, 0.2), transparent 45%),
+    radial-gradient(circle at 85% 78%, rgba(251, 191, 36, 0.14), transparent 42%),
+    repeating-linear-gradient(
+      -28deg,
+      rgba(251, 113, 133, 0.04) 0px,
+      rgba(251, 113, 133, 0.04) 1px,
+      transparent 1px,
+      transparent 38px
+    );
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+}
+
+.matter-thermal-bg {
+  background-image:
+    radial-gradient(circle at 16% 20%, rgba(56, 189, 248, 0.16), transparent 45%),
+    radial-gradient(circle at 84% 72%, rgba(249, 115, 22, 0.14), transparent 45%),
+    radial-gradient(rgba(125, 211, 252, 0.14) 1.25px, transparent 1.25px);
+  background-size: 100% 100%, 100% 100%, 34px 34px;
+}
+
+.electric-circuit-bg {
+  background-image:
+    radial-gradient(circle at 20% 16%, rgba(250, 204, 21, 0.15), transparent 44%),
+    radial-gradient(circle at 80% 82%, rgba(245, 158, 11, 0.12), transparent 40%),
+    linear-gradient(rgba(250, 204, 21, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+}
+
+.eco-forest-bg {
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(20, 184, 166, 0.17), transparent 46%),
+    radial-gradient(circle at 84% 76%, rgba(132, 204, 22, 0.13), transparent 44%),
+    radial-gradient(rgba(94, 234, 212, 0.13) 1.25px, transparent 1.25px);
+  background-size: 100% 100%, 100% 100%, 30px 30px;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confettiFall 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hap-icon-glow {
+  box-shadow: 0 0 10px rgba(190, 242, 100, 0.45);
+}
+
+.hap-card-glow {
+  box-shadow: 0 0 0 1px rgba(190, 242, 100, 0.55), 0 0 12px rgba(163, 230, 53, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-confetti {
+    animation: none;
+    opacity: 0;
+  }
+}
