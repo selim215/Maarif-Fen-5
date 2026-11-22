@@ -13,6 +13,7 @@ import {
 import { HapBilgiItem, TopicData, UnitThemeId } from '../../types';
 import { UNIT_THEMES } from '../../utils/theme';
 import { soundEngine } from '../../utils/sound';
+import { HapTopicIllustration } from './HapTopicIllustration';
 
 interface HapBilgilerActivityProps {
   topic: TopicData;
@@ -25,33 +26,33 @@ const HAP_CATEGORY_META: Record<
   HapBilgiItem['category'],
   {
     label: string;
-    borderClass: string;
-    badgeClass: string;
+    cardBorderClass: string;
+    labelTextClass: string;
     icon: React.FC<{ className?: string }>;
   }
 > = {
   'bilgi-istasyonu': {
     label: 'Bilgi İstasyonu',
-    borderClass: 'border-l-emerald-400',
-    badgeClass: 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30',
+    cardBorderClass: 'border-emerald-400/25 hover:border-emerald-400/45',
+    labelTextClass: 'text-emerald-300',
     icon: Lightbulb,
   },
   kopru: {
     label: 'Köprü İstasyonu',
-    borderClass: 'border-l-sky-400',
-    badgeClass: 'bg-sky-500/15 text-sky-300 border-sky-400/30',
+    cardBorderClass: 'border-sky-400/25 hover:border-sky-400/45',
+    labelTextClass: 'text-sky-300',
     icon: Compass,
   },
   'cagini-asanlar': {
     label: 'Çağını Aşanlar',
-    borderClass: 'border-l-amber-400',
-    badgeClass: 'bg-amber-400/20 text-amber-300 border-amber-400/40',
+    cardBorderClass: 'border-amber-400/30 hover:border-amber-400/50',
+    labelTextClass: 'text-amber-300',
     icon: Award,
   },
   'kritik-not': {
     label: 'Kritik Hap Bilgi',
-    borderClass: 'border-l-rose-400',
-    badgeClass: 'bg-rose-500/15 text-rose-300 border-rose-400/30',
+    cardBorderClass: 'border-rose-400/25 hover:border-rose-400/45',
+    labelTextClass: 'text-rose-300',
     icon: Flame,
   },
 };
@@ -143,7 +144,7 @@ export const HapBilgilerActivity: React.FC<HapBilgilerActivityProps> = ({
           </div>
 
           <div className="min-w-0 flex-1 space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-lime-300">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold tracking-wide text-lime-300">
               <Sparkles className="h-3.5 w-3.5" />
               <span>1. Adım · MEB Ders Kitabı Özeti</span>
             </div>
@@ -175,7 +176,7 @@ export const HapBilgilerActivity: React.FC<HapBilgilerActivityProps> = ({
         </div>
       </div>
 
-      {/* All Structured Hap Bilgiler Cards */}
+      {/* All Structured Hap Bilgiler Cards with Topic Vector Illustrations */}
       <div className="space-y-3.5">
         {topic.hapBilgiler.map((item, idx) => {
           const meta = HAP_CATEGORY_META[item.category];
@@ -197,41 +198,47 @@ export const HapBilgilerActivity: React.FC<HapBilgilerActivityProps> = ({
                   return next;
                 });
               }}
-              className={`rounded-2xl border border-l-4 p-4 sm:p-5 space-y-2.5 transition-colors ${meta.borderClass} ${theme.surface}`}
+              className={`rounded-2xl border p-4 sm:p-5 transition-colors ${theme.surface} ${meta.cardBorderClass}`}
             >
-              <div className="flex items-center justify-between gap-2">
-                <div
-                  className={`inline-flex items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-extrabold ${meta.badgeClass}`}
-                >
-                  <CatIcon className="h-4 w-4 shrink-0" />
-                  <span>{meta.label}</span>
+              <div className="flex items-start gap-3.5 sm:gap-4">
+                <HapTopicIllustration
+                  simType={topic.simType}
+                  themeId={themeId}
+                  category={item.category}
+                  title={item.title}
+                  content={item.content}
+                />
+
+                <div className="min-w-0 flex-1 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className={`inline-flex items-center gap-1.5 text-xs font-extrabold ${meta.labelTextClass}`}>
+                      <CatIcon className="h-3.5 w-3.5 shrink-0" />
+                      <span>{meta.label}</span>
+                      <span aria-hidden="true" className={theme.textMuted}>
+                        ·
+                      </span>
+                      <span className={`tabular-nums font-semibold ${theme.textMuted}`}>
+                        {idx + 1}/{topic.hapBilgiler.length}
+                      </span>
+                    </div>
+
+                    {isSeen && (
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400">
+                        <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                        <span>Okundu</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className={`font-display text-base font-extrabold leading-snug sm:text-lg ${theme.textPrimary}`}>
+                    {item.title}
+                  </h3>
+
+                  <p className={`text-sm leading-relaxed sm:text-[15px] ${theme.textSecondary}`}>
+                    {item.content}
+                  </p>
                 </div>
-
-                <span
-                  className={`inline-flex items-center gap-1 text-xs font-bold tabular-nums ${
-                    isSeen ? 'text-emerald-400' : theme.textMuted
-                  }`}
-                >
-                  {isSeen ? (
-                    <>
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Okundu</span>
-                    </>
-                  ) : (
-                    <span>
-                      {idx + 1}/{topic.hapBilgiler.length}
-                    </span>
-                  )}
-                </span>
               </div>
-
-              <h3 className={`font-display text-base font-extrabold leading-snug sm:text-lg ${theme.textPrimary}`}>
-                {item.title}
-              </h3>
-
-              <p className={`text-sm leading-relaxed sm:text-[15px] ${theme.textSecondary}`}>
-                {item.content}
-              </p>
             </motion.div>
           );
         })}
@@ -243,14 +250,17 @@ export const HapBilgilerActivity: React.FC<HapBilgilerActivityProps> = ({
         data-hap-id="key-notes"
         className={`rounded-2xl border border-amber-400/35 p-5 space-y-3 ${theme.surface}`}
       >
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-300">
-              <BookOpen className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="text-[11px] font-extrabold uppercase tracking-wider text-amber-300">
-                Altın Özet · Aklında Tut
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <HapTopicIllustration
+              simType={topic.simType}
+              themeId={themeId}
+              size="sm"
+            />
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 text-[11px] font-extrabold tracking-wide text-amber-300">
+                <BookOpen className="h-3.5 w-3.5 shrink-0" />
+                <span>Altın Özet · Aklında Tut</span>
               </div>
               <h3 className={`font-display text-base font-extrabold sm:text-lg ${theme.textPrimary}`}>
                 {topic.keyNoteTitle}

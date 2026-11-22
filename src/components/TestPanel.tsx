@@ -21,6 +21,7 @@ import { CURRICULUM, getAllTests, getTopicExtraTests, getTopicRequiredTests } fr
 import { StudentProgress, TopicData, TopicTest, UnitThemeId } from '../types';
 import { UNIT_THEMES } from '../utils/theme';
 import { soundEngine } from '../utils/sound';
+import { UnitSuccessChart } from './UnitSuccessChart';
 
 interface TestPanelProps {
   progress: StudentProgress;
@@ -206,6 +207,14 @@ export const TestPanel: React.FC<TestPanelProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Unit-Based Success Rate Bar Chart (Recharts) */}
+      <UnitSuccessChart
+        progress={progress}
+        themeId={themeId}
+        activeUnitFilter={unitFilter}
+        onSelectUnit={setUnitFilter}
+      />
 
       {/* Filters */}
       <div className="space-y-2.5">
